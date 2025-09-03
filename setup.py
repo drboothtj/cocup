@@ -11,7 +11,7 @@ setup(
     python_requires=">=3.10",               # Minimum Python version
     entry_points={                           # Optional CLI entry point
         "console_scripts": [
-            "cocup=cocup.__main__:main",
+            "cocup=cocup.main:main",
         ],
     },
 )
