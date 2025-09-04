@@ -3,10 +3,14 @@ main routine for CoCuP
 '''
 
 from cocup.parser import parser
-#from cocup.builder import scaffold
+from cocup.builder import scaffold
 
 def main():
-  args = parser.parse_args()  #read arguments from parser (project name, my name, requirements, ???)
+  args = parser.parse_args()
+  scaffold(args.project_name)
+  
+
+
   #make the scaffold directories
   #populate directories
 
