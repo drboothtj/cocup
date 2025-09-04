@@ -4,7 +4,20 @@ This module contains functions for building the architechture of the new package
 '''
 
 import os
+import shutil
 from textwrap import dedent
+
+def licenses(license_path: str) -> None:
+    '''
+    copy a license from the license_templates directory to the new project
+        argumets:
+            license_path: the name of the license file from the parser
+        returns:
+            None
+    '''
+    source_path = os.path.join(os.path.dirname(__file__), 'license_templates', license_path)
+    dest_path = os.path.join(os.getcwd(), "LICENSE")
+    shutil.copyfile(source_path, dest_path)
 
 def readme(project_name, description):
     '''
