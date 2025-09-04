@@ -3,22 +3,20 @@ main routine for CoCuP
 '''
 
 from cocup.parser import parser
-from cocup.builder import scaffold
+from cocup import builder
 
 def main():
-  args = parser.parse_args()
-  scaffold(args.project_name)
-  
-
-
-  #make the scaffold directories
-  #populate directories
+    '''
+    main routine for cocup
+    '''
+    args = parser.parse_args()
+    builder.scaffold(args.project_name)
+    builder.setup(
+      args.project_name, args.description, args.author, args.email, args.requirements
+      )
+    builder.readme(args.project_name, args.description)
+    builder.licenses(args.license)
+    builder.scripts(args)
 
 if __name__ == "__main__":
     main()
-
-
-
-# make directories
-
-#add template files

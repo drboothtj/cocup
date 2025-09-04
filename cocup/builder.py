@@ -7,6 +7,41 @@ import os
 import shutil
 from textwrap import dedent
 
+def create_script_from_template(template_path, dest_path, context):
+    """
+    template_path: path to template file
+    dest_path: output path for new script
+    context: dict with placeholder replacements, e.g., {"project_name": "cocup"}
+    """
+    with open(template_path) as file:
+        content = file.read()
+
+    for key, value in context.items():
+        content = content.replace(f"{{{key}}}", value)
+
+    with open(dest_path, "w") as file:
+        file.write(content)
+
+def scripts(args):
+    '''
+    build scripts from templates
+    '''
+    templates_path = os.path.join(os.path.dirname(__file__), 'templates')
+    #build main
+    create_script_from_template(
+        os.path.join(templates_path, 'python/main.py'), os.path.join(args.project_name, 'main.py'),
+        {
+            "project_name": args.project_name
+        }
+    )
+    #build parser
+
+    #build errors()
+
+    #build utils()
+
+    #build.logging()
+
 def licenses(license_path: str) -> None:
     '''
     copy a license from the license_templates directory to the new project
@@ -15,7 +50,7 @@ def licenses(license_path: str) -> None:
         returns:
             None
     '''
-    source_path = os.path.join(os.path.dirname(__file__), 'license_templates', license_path)
+    source_path = os.path.join(os.path.dirname(__file__), 'templates/licenses', license_path)
     dest_path = os.path.join(os.getcwd(), "LICENSE")
     shutil.copyfile(source_path, dest_path)
 
