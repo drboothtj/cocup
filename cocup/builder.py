@@ -4,6 +4,68 @@ This module contains functions for building the architechture of the new package
 '''
 
 import os
+from textwrap import dedent
+
+def readme(project_name, description):
+    '''
+    add README.md to directory
+        arguments:
+            project name: the name of the package
+            descriptiom: the packages description
+    '''
+    writelines = [
+        f'#{project_name}: {description}',
+        '##Description',
+        description,
+        '\n'
+        '##Installation',
+        'WIP',
+        '\n'
+        '##Usage',
+        'WIP',
+        '\n'
+        '##Citation',
+        'TBC'
+    ]
+    with open('README.md', "w") as file:
+        for line in writelines:
+            file.write(line + "\n")
+
+def setup(project_name, description, author, email, requirements):
+    '''
+    add setup.py to the directory
+        arguments:
+        returns:
+            None
+    '''
+    if requirements is None:
+        requirements = []
+    requirements_str = ",\n        ".join(f'"{req}"' for req in requirements)
+
+    setup_content = dedent(f"""
+    from setuptools import setup, find_packages
+
+    setup(
+        name="{project_name}",
+        version="0.0.1",
+        description="{description}",
+        author="{author}",
+        author_email="{email}",
+        packages=find_packages(),
+        install_requires=[
+            {requirements_str}
+        ],
+        python_requires=">=3.10",
+        entry_points={{
+            "console_scripts": [
+                "{project_name}={project_name}.main:main",
+            ],
+        }},
+    )
+    """).strip()
+
+    with open("setup.py", "w") as f:
+        f.write(setup_content + "\n")
 
 def scaffold(project_name: str) -> None:
     '''
@@ -26,4 +88,3 @@ def scaffold(project_name: str) -> None:
     for directory in project_dirs:
         path = os.path.join(directory)
         os.makedirs(path)
-    
