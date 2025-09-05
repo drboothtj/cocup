@@ -3,12 +3,14 @@
 ## Description
 A 'cookie cutter' to create a blank template for a python package in the target directory.
 
-`CoCuP` will create a skeleton Python package with the following architechture:
+`cocup` will create a skeleton Python package with the following architechture:
 
 ```
 my_package/
 ├── setup.py
+├── LICENSE
 ├── README.md
+├── .gitignore
 ├── my_package/
 │   ├── __init__.py
 │   ├── __main__.py
@@ -18,23 +20,44 @@ my_package/
 │   │   └── parser.py
 │   ├── utils/
 │   │   ├── __init__.py
-│   │   ├── classes.py
-│   │   ├── errors.py
-│   │   └── io_utils.py
+│   │   └── errors.py
 ├── example_data/
 │   ├── example_in/
 │   └── example_out/
 └── tests/
-    ├── __init__.py
-    ├── test_utils.py
-    └── test_main.py
 ```
+Minimal scripts will be generated to produce a functioning skeleton package with a simple parser and basic logging functions.
 
 ## Installation
-WIP
+Either clone this repositor, or download and install with PyPI:
+
+`pip install cocup`
 
 ## Usage
-WIP
+### Minimal Usage
+At minimum `cocup` requires two positional arguments: the project name and description. 
+For example, to create a package called `my_package`, navigate to an empty directory and run:
+
+`cocup my_package 'a description of my package'`
+
+**IMPORTANT:** By default, `cocup` creates a GPL3.0 license for the package. If you want to use a different license,
+you can either select a different license with `-l`, or delete this license and replace it with you own. **You alone
+are responsible for licensing your software!** You have been warned!
+
+### Recommended Usage
+I recommend to use `cocup` with additional parameters to help you populate the package with information about the author.
+Specifically:
+
+`cocup my_package 'a description of my package' -a 'John Smith' -e john.smith@email.com`
+
+### Other Parameters
+There are a few other parameters that might be useful:
+
+`-l` change the license, **IMPORANT:** Defaults to GPL3.0, see above.
+
+`-r` add requirements to the setup.py (e.g. `-r numpy,matplotlib`)
+
+`-h` print the help text for the parser
 
 ## Citation
 None - go crazy!
