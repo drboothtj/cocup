@@ -14,7 +14,7 @@ def main():
     builder.setup(
       args.project_name, args.description, args.author, args.email, args.requirements
       )
-    #gitignore
+    builder.gitignore()
     builder.readme(args.project_name, args.description)
     builder.licenses(args.license)
     builder.scripts(args)
