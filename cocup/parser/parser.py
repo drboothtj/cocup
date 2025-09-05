@@ -1,6 +1,18 @@
+'''
+the arg parser for cocup
+'''
 import argparse
+import os
 from argparse import RawTextHelpFormatter
 
+def available_licenses():
+    '''
+    find available licenses for the parser
+    '''
+    package_dir = os.path.dirname(os.path.dirname(__file__))
+    templates_dir = os.path.join(package_dir, 'templates/licenses')
+    licenses = os.listdir(templates_dir)
+    return licenses
 
 def get_parser():
     '''
@@ -17,18 +29,32 @@ def get_parser():
       type=str
     )
     parser.add_argument(
+      'description',
+      type=str
+    )
+    parser.add_argument(
       '-a', '--author',
-      default=None,
+      default='annonymous',
       type=str
     )
     parser.add_argument(
       '-e', '--email',
-      default=None,
+      default='example@email.com',
       type=str
     )
     parser.add_argument(
       '-r', '--requirements',
-      default=None,
+      default='[]',
+      type=str
+    )
+    parser.add_argument(
+      '-l', '--license',
+      choices=available_licenses(),
+      help=(
+      "IMPORTANT: Always check the license before publishing!\n"
+      "You are responsible for licensing your own software!"
+      ),
+      default='gpl3.txt',
       type=str
     )
     return parser

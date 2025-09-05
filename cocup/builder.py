@@ -5,7 +5,7 @@ This module contains functions for building the architechture of the new package
 
 import os
 import shutil
-from textwrap import dedent
+from datetime import date
 
 def create_script_from_template(template_path, dest_path, context):
     """
@@ -29,13 +29,23 @@ def scripts(args):
     templates_path = os.path.join(os.path.dirname(__file__), 'templates')
     #build main
     create_script_from_template(
-        os.path.join(templates_path, 'python/main.py'), os.path.join(args.project_name, 'main.py'),
+        os.path.join(templates_path, 'python/main.py'),
+        os.path.join(args.project_name, 'main.py'),
         {
             "project_name": args.project_name
         }
     )
     #build parser
-
+    create_script_from_template(
+        os.path.join(templates_path, 'python/parser.py'),
+        os.path.join(args.project_name, 'parser/parser.py'),
+        {
+            "project_name": args.project_name,
+            "description": args.description,
+            "author": args.author,
+            "year": str(date.today().year)
+        }
+    )
     #build errors()
 
     #build utils()
@@ -86,34 +96,21 @@ def setup(project_name, description, author, email, requirements):
         returns:
             None
     '''
-    if requirements is None:
-        requirements = []
-    requirements_str = ",\n        ".join(f'"{req}"' for req in requirements)
-
-    setup_content = dedent(f"""
-    from setuptools import setup, find_packages
-
-    setup(
-        name="{project_name}",
-        version="0.0.1",
-        description="{description}",
-        author="{author}",
-        author_email="{email}",
-        packages=find_packages(),
-        install_requires=[
-            {requirements_str}
-        ],
-        python_requires=">=3.10",
-        entry_points={{
-            "console_scripts": [
-                "{project_name}={project_name}.main:main",
-            ],
-        }},
+    template_path = os.path.join(os.path.dirname(__file__), 'templates/python/setup.py')
+    requirements_str = ',\n'.join(["'" + req + "'" for req in requirements.split(',')])
+    print(requirements_str)
+    create_script_from_template(
+        template_path,
+        'setup.py',
+        {
+            "project_name": project_name,
+            "description": description,
+            "author": author,
+            "email": email,
+            "requirements":  requirements_str
+        }
     )
-    """).strip()
 
-    with open("setup.py", "w") as f:
-        f.write(setup_content + "\n")
 
 def scaffold(project_name: str) -> None:
     '''
@@ -125,14 +122,24 @@ def scaffold(project_name: str) -> None:
     '''
     print(f'make scaffold for {project_name}')
     project_dirs = [
-    project_name,
-    f"{project_name}/parser",
-    f"{project_name}/utils",
-    f"{project_name}/tests",
-    "example_data/example_in",
-    "example_data/example_out"
+        project_name,
+        f"{project_name}/parser",
+        f"{project_name}/utils",
+        f"{project_name}/tests",
+        "example_data/example_in",
+        "example_data/example_out"
+    ]
+
+    project_files = [
+        f"{project_name}/__init__.py",
+        f"{project_name}/__main__.py",
+        f"{project_name}/parser/__init__.py",
+        f"{project_name}/utils/__init__.py",
     ]
 
     for directory in project_dirs:
         path = os.path.join(directory)
         os.makedirs(path)
+
+    for file in project_files:
+        open(file, 'a').close()
