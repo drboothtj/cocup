@@ -59,6 +59,14 @@ def scripts(args):
 
     #build.logging()
 
+def gitignore():
+    '''
+    copy the gitignore from the templates/misc dir
+    '''
+    source_path = os.path.join(os.path.dirname(__file__), 'templates/misc/gitignore')
+    dest_path = os.path.join(os.getcwd(), ".gitignore")
+    shutil.copyfile(source_path, dest_path)
+
 def licenses(license_path: str) -> None:
     '''
     copy a license from the license_templates directory to the new project
