@@ -1,9 +1,14 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as fh:
+    description = fh.read()
+
 setup(
     name="cocup",
-    version="0.0.1",                     
+    version="0.1.0",
     description="Thom's COokie CUtter for Python",
+    long_description=description,
+    long_description_content_type="text/markdown",
     author="Thomas J. Booth",
     author_email="thoboo@biosustain.dtu.dk",
     packages=find_packages(),
