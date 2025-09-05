@@ -6,10 +6,14 @@ setup(
     description="Thom's COokie CUtter for Python",
     author="Thomas J. Booth",
     author_email="thoboo@biosustain.dtu.dk",
-    packages=find_packages(),           
+    packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        "cocup": ["templates/**/*"],
+    },           
     install_requires=[],
-    python_requires=">=3.10",               # Minimum Python version
-    entry_points={                           # Optional CLI entry point
+    python_requires=">=3.10",
+    entry_points={
         "console_scripts": [
             "cocup=cocup.main:main",
         ],
