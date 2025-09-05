@@ -47,8 +47,15 @@ def scripts(args):
         }
     )
     #build errors()
-
-    #build utils()
+    create_script_from_template(
+        os.path.join(templates_path, 'python/errors.py'),
+        os.path.join(args.project_name, 'utils/errors.py'),
+        {
+            "project_name": args.project_name,
+            "capitalised_project_name" : args.project_name.capitalize()
+            #capitalised for class name
+        }
+    )
 
     #build.logging()
 
