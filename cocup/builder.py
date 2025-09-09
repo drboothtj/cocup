@@ -112,8 +112,11 @@ def setup(project_name, description, author, email, requirements):
             None
     '''
     template_path = os.path.join(os.path.dirname(__file__), 'templates/python/setup.py')
-    requirements_str = ',\n'.join(["'" + req + "'" for req in requirements.split(',')])
-    print(requirements_str)
+    print(requirements)
+    if requirements:
+      requirements_str = ',\n'.join(["'" + req + "'" for req in requirements.split(',')])
+    else:
+      requirements_str = ""
     create_script_from_template(
         template_path,
         'setup.py',
@@ -135,7 +138,6 @@ def scaffold(project_name: str) -> None:
         returns:
             None
     '''
-    print(f'make scaffold for {project_name}')
     project_dirs = [
         project_name,
         f"{project_name}/parser",

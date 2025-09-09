@@ -44,7 +44,7 @@ def get_parser():
     )
     parser.add_argument(
       '-r', '--requirements',
-      default='[]',
+      default=None,
       type=str
     )
     parser.add_argument(
