@@ -63,5 +63,5 @@ There are a few other parameters that might be useful:
 None - go crazy!
 
 ## Version Log
-0.1.0 - initial version
-0.1.1 - fixed a bug when creating a setup.py with no requirements
+- 0.1.0 - initial version
+- 0.1.1 - fixed a bug when creating a setup.py with no requirements
